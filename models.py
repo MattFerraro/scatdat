@@ -11,6 +11,7 @@ Base = declarative_base()
 
 
 class StallEvent(Base):
+    __tablename__ = 'events'
     id = Column(Integer, primary_key=True)
     time = Column(DateTime, default=datetime.datetime.utcnow)
 
