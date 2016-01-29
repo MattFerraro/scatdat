@@ -19,7 +19,8 @@ const char STALL_ID[] = "Floor2Mens1";
 /////////////////////////////
 // Remote Site Definitions //
 /////////////////////////////
-const char http_site[] = "scatdat.earth.planet.com";
+// const char http_site[] = "scatdat.earth.planet.com";
+const char http_site[] = "";
 const int http_port = 5000;
 
 /////////////////////
@@ -42,22 +43,22 @@ int vbatt = 0;
 // connectWiFi Function //
 //////////////////////////
 void connectWiFi() {
-  
+
   byte led_status = 0;
-  
+
   // Set WiFi mode to station (client)
   WiFi.mode(WIFI_STA);
-  
+
   // Initiate connection with SSID and PSK
   WiFi.begin(WIFI_SSID, WIFI_PSK);
-  
+
   // Blink LED while we wait for WiFi connection
   while ( WiFi.status() != WL_CONNECTED ) {
     digitalWrite(LED_PIN, led_status);
     led_status ^= 0x01;
     delay(100);
   }
-  
+
   // Turn LED on when we are connected
   digitalWrite(LED_PIN, LOW);
 }
@@ -69,9 +70,9 @@ void connectWiFi() {
 bool postEvent(int doorOpen,int battmV) {
   char paramString[256];
   Serial.println("Attempting to connect to");
-  sprintf(paramString,"%s:%i",http_site,http_port);  
-  Serial.print(paramString);
-  
+  sprintf(paramString,"%s:%i",http_site,http_port);
+  Serial.println(paramString);
+
   // Attempt to make a connection to the remote server
   if ( !client.connect(http_site, http_port) ) {
     return false;
@@ -80,13 +81,13 @@ bool postEvent(int doorOpen,int battmV) {
   sprintf(paramString,"?stallId=%s&doorOpen=%i&battV=%i",STALL_ID,doorOpen,battmV);
   // Make an HTTP GET request
   client.print("GET /newdata");
-  client.print(paramString);  
+  client.print(paramString);
   client.println(" HTTP/1.1");
   client.print("Host: ");
   client.println(http_site);
   client.println("Connection: close");
   client.println();
-  
+
   return true;
 }
 
@@ -94,7 +95,7 @@ bool postEvent(int doorOpen,int battmV) {
 // initHardware Function //
 ///////////////////////////
 void initHardware(){
-  Serial.begin(9600);
+  Serial.begin(230400);
   // Set door sensor pin as input, no pull up needed because there is an external pull up
   pinMode(DOOR_SENSOR_PIN, INPUT);
   // Set led pin as output and turn it off
@@ -121,34 +122,60 @@ int calcBattmV(int analogValue){
 ////////////////////
 // setup Function //
 ////////////////////
+byte led_status = 0;
 void setup() {
+  Serial.begin(230400);
+  Serial.println("hello world!");
 
+
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, LOW);
+
+  for (int i = 0; i < 50; ++i)
+  {
+    Serial.println("in loop");
+    Serial.println(i);
+    digitalWrite(LED_PIN, led_status);
+    led_status ^= 0x01;
+    delay(500);
+  }
   // setup pins/serial comms
   initHardware();
-  
+  Serial.println("Done with init hardware!");
+
   // connect to the newtwork
   connectWiFi();
+  Serial.println("Done with connect wifi!");
 
   // turn on LED
   digitalWrite(LED_PIN, HIGH);
+  Serial.println("LED on!");
 
   // Read door sensor state
   doorState = digitalRead(DOOR_SENSOR_PIN);
-  
+  Serial.println("Read door state!");
+
   // get analog reading & calculate battery voltage
   analogValue = analogRead(ANALOG_PIN);
+  Serial.println("got analog value!");
   vbatt = calcBattmV(analogValue);
+  Serial.println("got vbatt!");
 
   // Post the data
   if (!postEvent(doorState,vbatt)) {
     Serial.println("POST request failed");
   }
+  else {
+    Serial.println("POST request success");
+  }
 
   // turn off LED
   digitalWrite(LED_PIN,LOW);
+  Serial.println("LED off. Going to sleep");
 
   // go into deep sleep mode
   ESP.deepSleep(SLEEP_TIME_S * 1000000, WAKE_RF_DEFAULT);
+  Serial.println("in deep sleep");
 }
 
 ///////////////////
