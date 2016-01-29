@@ -25,3 +25,5 @@ Run with:
 Compile and upload using the arduino IDE (which I hate a lot).
 
 To debug, use a program like CoolTerm. Importantly, remember that during programming you must connect all programmer pins. If you want to debug you must disconnect the DTR pin. If you do not disconnect the DTR pin, connecting CoolTerm will pull it down which switches the microcontroller into bootloader mode, which of course prevents any meaningful debugging.
+
+More info [here](https://learn.sparkfun.com/tutorials/esp8266-thing-hookup-guide/using-the-arduino-addon)
