@@ -19,8 +19,7 @@ const char STALL_ID[] = "Floor2Mens1";
 /////////////////////////////
 // Remote Site Definitions //
 /////////////////////////////
-// const char http_site[] = "scatdat.earth.planet.com";
-const char http_site[] = "";
+const char http_site[] = "scatdat.earth.planet.com";
 const int http_port = 5000;
 
 /////////////////////
@@ -70,7 +69,7 @@ void connectWiFi() {
 bool postEvent(int doorOpen,int battmV) {
   char paramString[256];
   Serial.println("Attempting to connect to");
-  sprintf(paramString,"%s:%i",http_site,http_port);
+  sprintf(paramString, "%s:%i", http_site, http_port);
   Serial.println(paramString);
 
   // Attempt to make a connection to the remote server
@@ -78,16 +77,13 @@ bool postEvent(int doorOpen,int battmV) {
     return false;
   }
   // Construct parameter string
-  sprintf(paramString,"?stallId=%s&doorOpen=%i&battV=%i",STALL_ID,doorOpen,battmV);
+  sprintf(paramString, "POST /events?stall_id=%s&door_open=%i&batt_v=%i HTTP/1.1", STALL_ID, doorOpen, battmV);
   // Make an HTTP GET request
-  client.print("GET /newdata");
-  client.print(paramString);
-  client.println(" HTTP/1.1");
+  client.println(paramString);
   client.print("Host: ");
   client.println(http_site);
   client.println("Connection: close");
   client.println();
-
   return true;
 }
 
@@ -131,7 +127,7 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  for (int i = 0; i < 50; ++i)
+  for (int i = 0; i < 25; ++i)
   {
     Serial.println("in loop");
     Serial.println(i);
