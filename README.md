@@ -1,5 +1,7 @@
 # Scatdat
 
+Your #1 Solution to your #2 Problem.
+
 This repo contains two separate chunks of code:
   - The python code for the server
   - The arduino code for microcontroller
