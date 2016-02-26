@@ -23,6 +23,11 @@ def post_event():
     return flask.jsonify(api.new_event(stall_id, door_open, batt_v))
 
 
+@app.route('/statuses/')
+def get_statuses():
+    return flask.jsonify(api.get_statuses())
+
+
 @app.before_first_request
 def initialize():
     api.initialize_db("scatdat.db")
