@@ -29,6 +29,7 @@ class StallEvent(Base):
             "stall_id": self.stall_id,
             "door_open": self.door_open,
             "batt_v": self.batt_v,
+            "time": self.time
         }
 
     def __repr__(self):
