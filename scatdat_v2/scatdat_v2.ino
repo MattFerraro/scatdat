@@ -28,7 +28,7 @@ const int http_port = 5000;
 const int LED_PIN = 5;
 const int ANALOG_PIN = A0; // The only analog pin on the Thing
 const int DOOR_SENSOR_PIN = 4; // Digital pin to be read
-const int SLEEP_TIME_S = 3600; //sleep time between non door wakeups (in seconds), max is about 1 hr
+const int SLEEP_TIME_US = 3600000000; //sleep time between non door wakeups (in seconds), max is about 1 hr
 
 //////////////////////
 // Global Variables //
@@ -158,11 +158,8 @@ void setup() {
   Serial.println("got vbatt!");
 
   // Post the data
-  if (!postEvent(doorState,vbatt)) {
+  while (!postEvent(doorState,vbatt)) {
     Serial.println("POST request failed");
-  }
-  else {
-    Serial.println("POST request success");
   }
 
   // turn off LED
@@ -170,7 +167,7 @@ void setup() {
   Serial.println("LED off. Going to sleep");
 
   // go into deep sleep mode
-  ESP.deepSleep(SLEEP_TIME_S * 1000000, WAKE_RF_DEFAULT);
+  ESP.deepSleep(SLEEP_TIME_US, WAKE_RF_DEFAULT);
   Serial.println("in deep sleep");
 }
 
