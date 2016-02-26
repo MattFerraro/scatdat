@@ -1,12 +1,12 @@
 from flask import Flask, request
 import flask
 import api
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_path='/static')
 
 
 @app.route('/')
 def hello_world():
-    return 'Welcome to ScatDat! Your number 1 solution to your number 2 problem!'
+    return flask.render_template("index.html")
 
 
 @app.route('/events')
