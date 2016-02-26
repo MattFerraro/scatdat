@@ -127,14 +127,14 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  for (int i = 0; i < 25; ++i)
-  {
-    Serial.println("in loop");
-    Serial.println(i);
-    digitalWrite(LED_PIN, led_status);
-    led_status ^= 0x01;
-    delay(500);
-  }
+  // for (int i = 0; i < 25; ++i)
+  // {
+  //   Serial.println("in loop");
+  //   Serial.println(i);
+  //   digitalWrite(LED_PIN, led_status);
+  //   led_status ^= 0x01;
+  //   delay(500);
+  // }
   // setup pins/serial comms
   initHardware();
   Serial.println("Done with init hardware!");
