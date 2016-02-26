@@ -6,29 +6,28 @@
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container">
-  		<div class="row">
-        <div class="col-md-12" style="background-color:rgb(230,230,230)">
-          Scatdat all day erryday
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="background-color:rgb(230,230,230)">
+                Scatdat all day erryday
+            </div>
         </div>
-      </div>
-      <div class="row">
-  			<div class="col-md-12" style="background-color:rgb(240,240,240)">
-          <canvas width=300 height=300 id="canvas">
-          </canvas>
-  			</div>
+        <div class="row">
+            <div class="col-md-12" style="background-color:rgb(240,240,240)">
+                <canvas width=1000 height=400 id="canvas">
+                </canvas>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="static/js/underscore-min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/scatdat.js"></script>
+    <script>
+    var stalls = initialize();
 
-  		</div>
-	</div>
-
-	<script type="text/javascript" src="static/js/underscore-min.js"></script>
-	<script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
-  	<script type="text/javascript" src="static/js/scatdat.js"></script>
-  <script>
     var canvas = $("#canvas")[0];
-    sayHi();
-
-  </script>
+    draw(canvas, stalls);
+    </script>
 </body>
 </html>
