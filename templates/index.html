@@ -24,10 +24,15 @@
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="static/js/scatdat.js"></script>
     <script>
-    var stalls = initialize();
 
-    var canvas = $("#canvas")[0];
-    draw(canvas, stalls);
+    $(function() {
+        $.get('statuses', function(statuses) {
+            var canvas = $("#canvas")[0];
+            draw(canvas, statuses);
+        })
+
+    });
+
     </script>
 </body>
 </html>

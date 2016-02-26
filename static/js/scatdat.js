@@ -1,51 +1,5 @@
-function initialize() {
-	var stalls = [];
-	var oneStall = {
-		'floor': 1,
-		'status': 'occupied',
-		'gender': 'm'
-	};
 
-	var twoStall = {
-		'floor': 1,
-		'status': 'occupied',
-		'gender': 'm'
-	};
-
-	var redStall = {
-		'floor': 0,
-		'status': 'open',
-		'gender': 'm'
-	};
-
-	var blueStall = {
-		'floor': 0,
-		'status': 'open',
-		'gender': 'm'
-	};
-
-	var alphaStall = {
-		'floor': 0,
-		'status': 'open',
-		'gender': 'm'
-	};
-
-	var betaStall = {
-		'floor': 0,
-		'status': 'occupied',
-		'gender': 'm'
-	};
-
-	stalls.push(oneStall);
-	stalls.push(twoStall);
-	stalls.push(redStall);
-	stalls.push(blueStall);
-	stalls.push(alphaStall);
-	stalls.push(betaStall);
-	return stalls;
-}
-
-function draw(canvas, stalls){
+function draw(canvas, statuses){
 	var ctx = canvas.getContext("2d");
     // Clear the background
     ctx.fillStyle = "rgb(200,200,200)";
@@ -57,10 +11,18 @@ function draw(canvas, stalls){
     };
 
     // Draw the circles
-    for (var i = stalls.length - 1; i >= 0; i--) {
-        var stall = stalls[i];
-        drawCircle(ctx, i * 150 + 100, 200, 50, colorMapping[stall.status]);
-    }
+    var i = 0;
+    _.mapObject(statuses, function(val, key) {
+    	console.log("a status");
+    	console.log(key);
+    	console.log(val);
+    	drawCircle(ctx, i * 150 + 100, 200, 50, colorMapping[val.status]);
+    	i++;
+    })
+    // for (var i = statuses.length - 1; i >= 0; i--) {
+    //     var stall = statuses[i];
+    //     drawCircle(ctx, i * 150 + 100, 200, 50, colorMapping[stall.status]);
+    // }
 }
 
 function drawCircle(ctx, x, y, r, color) {
