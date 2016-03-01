@@ -35,7 +35,8 @@ def get_statuses():
             'open' if most_recent['door_open'] is True else 'occupied'
         statuses[stall_id] = {
             'status': stall_status,
-            'timestamp': most_recent['time']
+            'timestamp': most_recent['time'],
+            'batt_v': most_recent['batt_v']
         }
 
     return statuses
